@@ -21,10 +21,35 @@ bot.last_author = ''
 bot.message_content = ''
 
 #client = discord.Client()
+async def scrape_geld_messages():
+    print("Scraping messages...")
+    geld_counter = 0
+    counter = 0
+    infile = open('geld_messages.txt', 'w', encoding="utf-8")
+    for guild in bot.guilds:
+        if guild.name == BOIZ_DISCORD:
+            for channel in guild.text_channels:
+                messages = await channel.history(limit=15000, oldest_first=True).flatten()
+                for msg in messages:
+                    counter += 1
+                    if counter % 500 == 0:
+                        print(f'Parsed {counter} messages...')
+                    if msg.author.name == "Geld":
+                        geld_counter += 1
+                        #print(msg.content)
+                        if not msg.content.startswith('!'):
+                            infile.write(msg.content + "\n")    
+                            
+                            
+    print(f"Terminating. Found {geld_counter} messages.")
+        
+    infile.close()    
 
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
+    
+    #await scrape_geld_messages()
     
 @bot.event
 async def on_message(message):
@@ -466,6 +491,8 @@ async def simulate(ctx, *arg):
             filename = 'boiz_quotes.txt'
         elif arg == 'dnd':
             filename = 'dnd_quotes.txt'
+        elif arg == 'geld':
+            filename = 'geld_messages.txt'
         else:
             if ctx.guild.name == BOIZ_DISCORD:
                 filename = 'boiz_quotes.txt'

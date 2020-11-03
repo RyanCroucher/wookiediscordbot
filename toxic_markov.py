@@ -80,4 +80,4 @@ def generate_sentence(filename):
     sentence = toxic_markov(following_word_freq, random.choice(list(following_word_freq.keys())))
     return sentence
     
-print(generate_sentence('boiz_quotes.txt'))
+#print(generate_sentence('boiz_quotes.txt'))
