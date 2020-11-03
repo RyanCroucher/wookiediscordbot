@@ -8,6 +8,8 @@ from pathlib import Path
 
 from discord.ext import commands
 
+import toxic_markov
+
 env_path = Path('.') / '.env'
 load_dotenv(env_path)
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -444,6 +446,40 @@ async def roll_dice(ctx, *args):
             #await ctx.send(dice_string + ": " + str(dice_total)
     if num_rolls > 1:
         await ctx.send(f"Total: {grand_total}")
+        
+@bot.command(name='sim')
+async def sim(ctx):
+    await simulate.invoke(ctx)
+@bot.command(name='simulate')
+async def simulate(ctx, *arg):
+    filename = ''
+    if not arg:
+        if ctx.guild.name == BOIZ_DISCORD:
+            filename = 'boiz_quotes.txt'
+         
+        elif ctx.guild.name == RPG_DISCORD:
+            filename = 'dnd_quotes.txt'
+    else:
+        arg = arg[0].lower()
+
+        if arg == 'toxic':
+            filename = 'boiz_quotes.txt'
+        elif arg == 'dnd':
+            filename = 'dnd_quotes.txt'
+        else:
+            if ctx.guild.name == BOIZ_DISCORD:
+                filename = 'boiz_quotes.txt'
+             
+            elif ctx.guild.name == RPG_DISCORD:
+                filename = 'dnd_quotes.txt'            
+        
+
+    
+    await ctx.guild.get_member(bot.user.id).edit(nick='WookieBot')
+    
+    await ctx.send(f'Simulated sentence generated from {filename}:')
+    sentence = '"{}"'.format(toxic_markov.generate_sentence(filename))  
+    await ctx.send(sentence)   
 
 def main():
     bot.run(TOKEN)
