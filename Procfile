@@ -1,1 +1,1 @@
-bot_process: python wookiebot.py
+worker: python wookiebot.py
