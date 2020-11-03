@@ -3,11 +3,13 @@ import random
 #import nationdistributor.py
 
 import discord
-from dotenv import load_dotenv, find_dotenv
+from dotenv import load_dotenv
+from pathlib import Path
 
 from discord.ext import commands
 
-load_dotenv(find_dotenv())
+env_path = Path('.') / '.env'
+load_dotenv(env_path)
 TOKEN = os.getenv('DISCORD_TOKEN')
 BOIZ_DISCORD = os.getenv('BOIZ_DISCORD')
 RPG_DISCORD = os.getenv('RPG_DISCORD')
