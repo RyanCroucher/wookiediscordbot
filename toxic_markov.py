@@ -53,7 +53,7 @@ def toxic_markov(freq_dict, root_word):
     relative frequency of that following word in the data set."""
 
     sentence = [root_word.capitalize()]
-    max_sentence_length = 25
+    max_sentence_length = random.randint(16, 24)
 
     for i in range(max_sentence_length):
 
