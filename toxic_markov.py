@@ -4,10 +4,10 @@ def get_words(filename):
     """reads in all words from a file and returns them as a list"""
     infile = open(filename)
     #all_words = infile.read().split()
-	all_lines = infile.read().splitlines()
+    all_lines = infile.read().splitlines()
     infile.close()
     #return all_words
-	return all_lines
+    return all_lines
 
 def generate_dict(all_lines):
     """
@@ -17,23 +17,23 @@ def generate_dict(all_lines):
     following_word_freq = {}
     filtered_words = ['.', '-', '-.', ' ']
     
-	for i, line in enumerate(all_lines):
+    for i, line in enumerate(all_lines):
     
-		for j, word in enumerate(line):
-			
-			word = strip_word(word)
-			
-			if word not in filtered_words:
+	    for j, word in enumerate(line):
+		    
+		    word = strip_word(word)
+		    
+		    if word not in filtered_words:
 
-				if word and j < len(line)-1:
-					following_word = strip_word(words[j+1])
-					if not following_word_freq.get(word):
-						following_word_freq[word] = {following_word:1}
-					else:
-						following_word_freq[word][following_word] = following_word_freq[word].get(following_word, 0) + 1
-						
-			else:
-				print(f"Filtered out '{word}'")
+			    if word and j < len(line)-1:
+				    following_word = strip_word(words[j+1])
+				    if not following_word_freq.get(word):
+					    following_word_freq[word] = {following_word:1}
+				    else:
+					    following_word_freq[word][following_word] = following_word_freq[word].get(following_word, 0) + 1
+					    
+		    else:
+			    print(f"Filtered out '{word}'")
     
     return following_word_freq
 
