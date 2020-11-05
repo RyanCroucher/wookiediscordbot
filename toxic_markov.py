@@ -48,7 +48,7 @@ def toxic_markov(freq_dict, root_word):
     relative frequency of that following word in the data set."""
     
     sentence = [root_word.capitalize()]
-    max_sentence_length = 30
+    max_sentence_length = 20
     
     for i in range(max_sentence_length):
         
