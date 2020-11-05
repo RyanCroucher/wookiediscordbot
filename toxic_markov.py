@@ -3,11 +3,13 @@ import random, string
 def get_words(filename):
     """reads in all words from a file and returns them as a list"""
     infile = open(filename)
-    all_words = infile.read().split()
+    #all_words = infile.read().split()
+	all_lines = infile.read().splitlines()
     infile.close()
-    return all_words
+    #return all_words
+	return all_lines
 
-def generate_dict(words):
+def generate_dict(all_lines):
     """
     creates a nested dictionary, with each word as a key
     and the values are the frequency of the following words
@@ -15,22 +17,23 @@ def generate_dict(words):
     following_word_freq = {}
     filtered_words = ['.', '-', '-.', ' ']
     
+	for i, line in enumerate(all_lines):
     
-    for i, word in enumerate(words):
-        
-        word = strip_word(word)
-        
-        if word not in filtered_words:
+		for j, word in enumerate(line):
+			
+			word = strip_word(word)
+			
+			if word not in filtered_words:
 
-            if word and i < len(words)-1:
-                following_word = strip_word(words[i+1])
-                if not following_word_freq.get(word):
-                    following_word_freq[word] = {following_word:1}
-                else:
-                    following_word_freq[word][following_word] = following_word_freq[word].get(following_word, 0) + 1
-                    
-        else:
-            print(f"Filtered out '{word}'")
+				if word and j < len(line)-1:
+					following_word = strip_word(words[j+1])
+					if not following_word_freq.get(word):
+						following_word_freq[word] = {following_word:1}
+					else:
+						following_word_freq[word][following_word] = following_word_freq[word].get(following_word, 0) + 1
+						
+			else:
+				print(f"Filtered out '{word}'")
     
     return following_word_freq
 
@@ -75,8 +78,8 @@ def toxic_markov(freq_dict, root_word):
     return str_sentence
     
 def generate_sentence(filename):
-    all_words = get_words(filename)
-    following_word_freq = generate_dict(all_words)
+    all_lines = get_words(filename)
+    following_word_freq = generate_dict(all_lines)
     sentence = toxic_markov(following_word_freq, random.choice(list(following_word_freq.keys())))
     return sentence
     
