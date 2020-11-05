@@ -69,7 +69,7 @@ def toxic_markov(freq_dict, root_word):
 
         #print(following_word)
         sentence.append(following_word)
-        if not following_word or following_word.endswith('.') or following_word.startswith('-'):
+        if len(sentence) > 5 and (not following_word or following_word.endswith('.') or following_word.startswith('-')):
             break        
 
     str_sentence = ' '.join(sentence).strip()
