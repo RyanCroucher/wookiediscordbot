@@ -519,17 +519,17 @@ async def wookieepedia_scraper(ctx, *, arg):
     
     await ctx.guild.get_member(bot.user.id).edit(nick='WookieepediaBot')
 
-    url = wookieescraper.get_wikia_article(arg)
+    urls = wookieescraper.get_wikia_article(arg)
     
-    if not url:
+    if not urls:
         await ctx.send(f"Sorry, can't find any article to do with '{arg}'")
         
     else:
         
-        print(url)
-        title, description = wookieescraper.get_wikia_contents(url)
+        #print(url)
+        title, description = wookieescraper.get_wikia_contents(urls[0])
         
-        await ctx.send(f'**{title}**:\n{description}...\n{url}')
+        await ctx.send(f'**{title}**:\n{description}...\n{url}\nYou might also be interested in:\n'+'\n'.join('<' + url + '>' for url in urls[1:]))
         #await ctx.send(description + "...")
  
 

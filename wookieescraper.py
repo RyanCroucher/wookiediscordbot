@@ -29,11 +29,14 @@ def get_wikia_article(search_term):
     """
     googlified_search_term = '+'.join(term for term in search_term.split(' '))
     
-    google_query = f"https://www.google.com/search?sxsrf=ALeKk036ntSwXkae4YOGp5Vz1pV7dujP_w%3A1604704208905&ei=0NelX_npNt-Y4-EPkeaf0AI&q={googlified_search_term}%3Astarwars.fandom.com/wiki"
+    #google_query = f"https://www.google.com/search?sxsrf=ALeKk036ntSwXkae4YOGp5Vz1pV7dujP_w%3A1604704208905&ei=0NelX_npNt-Y4-EPkeaf0AI&q={googlified_search_term}%3Astarwars.fandom.com/wiki"
+    google_query = f"https://www.google.com/search?sxsrf=ALeKk00y84HATs555B3CKzDz6PgL_nAt-g%3A1604818709065&ei=FZenX5TSA8TyrAHIyLvwDQ&q={googlified_search_term}+site%3Astarwars.fandom.com%2Fwiki"
     
     r = requests.get(google_query)
     
     soup = BeautifulSoup(r.text, "html.parser")
+    
+    valid_urls = []
     
     for link in soup.find_all('a'):
         url = link.get('href')
@@ -42,26 +45,27 @@ def get_wikia_article(search_term):
         if url and '/url?q=' in url and 'Main_Page' not in url:
             stop_index = -1
             for i, c in enumerate(url):
-                if i > 7 and not (c.isalpha() or c == '/' or c == '.' or c == ':'):
+                if i > 7 and not (c.isalpha() or c == '/' or c == '.' or c == ':' or c == '_'):
                     stop_index = i
                     #print(f"c == {c}")
                     break
                 
-            #stop_index = min(url.find('&', 7), url.find('%', 7))
             #print(stop_index)
-            return url[7:stop_index]
-            #print(url[7:url.find('&')])
-        #if '/url?q=' in link.text:
-        #    return link.text[17:link.text.find('&')]
-        #print(link)  
-    
+            if len(valid_urls) < 4:
+                valid_urls.append(url[7:stop_index])
+            else:
+                break
+            #return url[7:stop_index]
+    print(valid_urls)
+    return valid_urls
     #print(soup)
     #return soup.find('cite').text    
  
     
 
-url = get_wikia_article("sarlacc")
-print(url)
-title, description = get_wikia_contents(url)
-print(title)
-print(description + "...")
+#urls = get_wikia_article("wookiee")
+#print(urls[0])
+#title, description = get_wikia_contents(urls[0])
+#print(title)
+#print(description + "...")
+#print('\n'.join(url for url in urls[::-1]))
