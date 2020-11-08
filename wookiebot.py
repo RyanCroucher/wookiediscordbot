@@ -529,7 +529,7 @@ async def wookieepedia_scraper(ctx, *, arg):
         #print(url)
         title, description = wookieescraper.get_wikia_contents(urls[0])
         
-        await ctx.send(f'**{title}**:\n{description}...\n{url[0]}\nYou might also be interested in:\n'+'\n'.join('<' + url + '>' for url in urls[1:]))
+        await ctx.send(f'**{title}**:\n{description}...\n{urls[0]}\nYou might also be interested in:\n'+'\n'.join('<' + url + '>' for url in urls[1:]))
         #await ctx.send(description + "...")
  
 
