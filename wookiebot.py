@@ -518,8 +518,13 @@ async def wookieepedia_scraper(ctx, *, arg):
     arg = arg.lower()
     
     await ctx.guild.get_member(bot.user.id).edit(nick='WookieepediaBot')
-
-    urls = wookieescraper.get_wikia_article(arg)
+    
+    urls = []
+    
+    if arg == 'random':
+        urls = ["https://starwars.fandom.com/wiki/Special:Random"]       
+    else:
+        urls = wookieescraper.get_wikia_article(arg)
     
     if not urls:
         await ctx.send(f"Sorry, can't find any article to do with '{arg}'")
@@ -529,7 +534,10 @@ async def wookieepedia_scraper(ctx, *, arg):
         #print(url)
         title, description = wookieescraper.get_wikia_contents(urls[0])
         
-        await ctx.send(f'**{title}**:\n{description}...\n{urls[0]}\nYou might also be interested in:\n'+'\n'.join('<' + url + '>' for url in urls[1:]))
+        if len(urls) > 1:
+            await ctx.send(f'**{title}**:\n{description}...\n{urls[0]}\nYou might also be interested in:\n'+'\n'.join('<' + url + '>' for url in urls[1:]))
+        else:
+            await ctx.send(f'**{title}**:\n{description}...\n{urls[0]}')
         #await ctx.send(description + "...")
  
 
