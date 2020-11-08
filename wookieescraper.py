@@ -34,7 +34,7 @@ def get_wikia_article(search_term):
         url = link.get('href')
         #print(url)
         if url and '/url?q=' in url and 'Main_Page' not in url and search_term.lower() in url.lower():
-            stop_index = min(url.find('&'), url.find('%'))
+            stop_index = min(url.find('&', 7), url.find('%', 7))
             return url[7:stop_index]
             #print(url[7:url.find('&')])
         #if '/url?q=' in link.text:
