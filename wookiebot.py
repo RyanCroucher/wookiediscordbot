@@ -9,6 +9,7 @@ from pathlib import Path
 from discord.ext import commands
 
 import toxic_markov
+import wookieescraper
 
 env_path = Path('.') / '.env'
 load_dotenv(env_path)
@@ -507,6 +508,29 @@ async def simulate(ctx, *arg):
     await ctx.send(f'Simulated sentence generated from {filename}:')
     sentence = '"{}"'.format(toxic_markov.generate_sentence(filename))  
     await ctx.send(sentence)   
+    
+@bot.command(name='wookie')
+async def wookie(ctx):
+    await wookieepedia_scraper.invoke(ctx)    
+@bot.command(name='wookiee')
+async def wookieepedia_scraper(ctx, *, arg):
+    
+    arg = arg.lower()
+    
+    await ctx.guild.get_member(bot.user.id).edit(nick='WookieepediaBot')
+
+    url = wookieescraper.get_wikia_article(arg)
+    
+    if not url:
+        await ctx.send(f"Sorry, can't find any article to do with '{arg}'")
+        
+    else:
+        
+        title, description = wookieescraper.get_wikia_contents(url)
+        
+        await ctx.send(f'**{title}**:\n{description}...\n{url}')
+        #await ctx.send(description + "...")
+ 
 
 def main():
     bot.run(TOKEN)
