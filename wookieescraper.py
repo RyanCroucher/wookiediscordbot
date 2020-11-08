@@ -17,6 +17,8 @@ def get_wikia_contents(url):
     title = soup.find(id='firstHeading')
 
     description = soup.find("meta", {"name": "description", "content": True})['content']
+    for i in range(10):
+        description = description.replace(f"{i}", "")
     
     return (title.string, description)
 
@@ -58,8 +60,8 @@ def get_wikia_article(search_term):
  
     
 
-#url = get_wikia_article("lightsaber")
-#print(url)
-#title, description = get_wikia_contents(url)
-#print(title)
-#print(description + "...")
+url = get_wikia_article("sarlacc")
+print(url)
+title, description = get_wikia_contents(url)
+print(title)
+print(description + "...")
