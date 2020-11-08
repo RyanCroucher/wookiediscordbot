@@ -32,9 +32,10 @@ def get_wikia_article(search_term):
     
     for link in soup.find_all('a'):
         url = link.get('href')
-        print(url)
+        #print(url)
         if url and '/url?q=' in url and 'Main_Page' not in url and search_term.lower() in url.lower():
-            return url[7:url.find('&')]
+            stop_index = min(url.find('&'), url.find('%'))
+            return url[7:stop_index]
             #print(url[7:url.find('&')])
         #if '/url?q=' in link.text:
         #    return link.text[17:link.text.find('&')]
