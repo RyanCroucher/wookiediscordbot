@@ -8,6 +8,9 @@ def get_wikia_contents(url):
     returns a tuple (title, description)
     """
     
+    if url is None:
+        return (None, None)
+    
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
     
@@ -33,8 +36,17 @@ def get_wikia_article(search_term):
     for link in soup.find_all('a'):
         url = link.get('href')
         #print(url)
-        if url and '/url?q=' in url and 'Main_Page' not in url and search_term.lower() in url.lower():
-            stop_index = min(url.find('&', 7), url.find('%', 7))
+        #and search_term.lower() in url.lower()
+        if url and '/url?q=' in url and 'Main_Page' not in url:
+            stop_index = -1
+            for i, c in enumerate(url):
+                if i > 7 and not (c.isalpha() or c == '/' or c == '.' or c == ':'):
+                    stop_index = i
+                    #print(f"c == {c}")
+                    break
+                
+            #stop_index = min(url.find('&', 7), url.find('%', 7))
+            #print(stop_index)
             return url[7:stop_index]
             #print(url[7:url.find('&')])
         #if '/url?q=' in link.text:
@@ -46,7 +58,7 @@ def get_wikia_article(search_term):
  
     
 
-#url = get_wikia_article("kashyyyk")
+#url = get_wikia_article("lightsaber")
 #print(url)
 #title, description = get_wikia_contents(url)
 #print(title)
