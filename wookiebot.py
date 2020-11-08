@@ -526,6 +526,7 @@ async def wookieepedia_scraper(ctx, *, arg):
         
     else:
         
+        print(url)
         title, description = wookieescraper.get_wikia_contents(url)
         
         await ctx.send(f'**{title}**:\n{description}...\n{url}')
