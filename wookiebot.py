@@ -350,11 +350,6 @@ async def gods(ctx, *, arg):
 async def howtoxic(ctx):
     #toxicity_level = random.randint(0, 100)
     toxic_words = [
-    ('meme', 5),('wookie', 5),('angus', 5),('succundo', 5),('grudge', 5), ('attrition', 5),
-    ('ryan',10),('farscape', 10),('simon',10),('remove', 10),('gold', 10),('aussie', 10),('geld', 10),('eamon',10), ('goat', 10), ('madcow', 10),('meta', 10),('dying', 10), ('gaslight', 10),
-    ('pico', 15),('dick', 15),('stupid', 15),('owned', 15),('pussies',15),('snake',15),('carrion', 15), ('rat', 15),
-    ('toxic', 20), ('toxicity', 20), ('kicked', 20), ('unfriending', 20), ('gaslighting', 20), ('fuck', 20), ('fucker', 20), ('shit', 20),('crying', 20),('execute', 20),('execution',20), 
-    ('sheckles', 25),('jew', 25),('just you', 25),('retards', 30),('phate', 40),('redacted', 40), ('homolust', 40)
     ]
     
     nick = bot.last_author.name
